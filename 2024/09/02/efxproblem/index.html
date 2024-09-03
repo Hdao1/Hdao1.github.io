@@ -188,7 +188,7 @@
             
             <span class="tag">
                 
-                <a href="/tags/life/" style="color: #00a596">life</a>
+                <a href="/tags/life/" style="color: #00bcd4">life</a>
             </span>
             
         </span>
@@ -199,21 +199,44 @@
         <p>上一周因为一直在看某不可分割物品公平分配相关paper，这几天关于此正在写slide，顺手记录一下一点喵言喵语<del>并不是因为已经不想再写slide了</del></p>
 <span id="more"></span>
 
-<h3 id="part1-先给出以下几个概念"><a href="#part1-先给出以下几个概念" class="headerlink" title="part1 先给出以下几个概念"></a>part1 先给出以下几个概念</h3><p>首先假定分配物品的总数M ，和参与分配的代理N，给定一个分配$A&#x3D;{A_1,…,A_n}$，其中$A_i$是第$i$个代理所得分配的捆绑物，下面几个概念均在此环境下进行定义。</p>
-<ul>
-<li>$EF(envy-free)$:<br>$\forall i,j \in N,v_i(A_i) \geq v_i(A_j)$</li>
-<li>$\alpha-EF1$<br>  $\forall i,j,\in N,A_j \not &#x3D;{0} , \exists g \in A_j,v_i(A_i)\geq \alpha v_i(A_j\backslash {g})$</li>
-<li>$\alpha-EFX$<br>$\forall i,j,\in N,A_j \not &#x3D;{0} , \forall g \in A_j,v_i(A_i)\geq \alpha v_i(A_j\backslash {g})$</li>
-<li>$\mu_i(n,S)&#x3D;max_{A \in \Pi_n(S)}  min_{A_j \in A}v_i(A_j)$</li>
-<li>$\alpha-MMS$<br>$\forall i \in N , v_i(A_i)\geq \alpha \mu_i$</li>
-<li>$\alpha-PMMS$<br>  $\forall i,j\in N,v_i(A_i)\geq \alpha \mu_i(2,A_i\cup A_j)$</li>
-<li>$\alpha-GMMS$<br>  $\forall N’ \subseteq N ,\forall i \in N’,v_i(A_i) \geq \alpha \mu_i(|N’|,\cup_{j\in N’}A_j)$</li>
-</ul>
+<h3 id="part1-先给出以下几个概念"><a href="#part1-先给出以下几个概念" class="headerlink" title="part1 先给出以下几个概念"></a>part1 先给出以下几个概念</h3><p>首先假定分配物品的总数M ，和参与分配的代理N，给定一个分配$A&#x3D;{A_1,…,A_n}$，其中$A_i$是第$i$个代理所得分配的捆绑物，下面几个概念均在此环境下进行定义。<br>$$EF(envy-free) :\forall i,j \in N,v_i(A_i) \geq v_i(A_j)$$<br>$$\alpha-EF1 :\forall i,j,\in N,A_j \not &#x3D;{0} , \exists g \in A_j,v_i(A_i)\geq \alpha v_i(A_j\backslash {g})$$<br>$$\alpha-EFX :\forall i,j,\in N,A_j \not &#x3D;{0} , \forall g \in A_j,v_i(A_i)\geq \alpha v_i(A_j\backslash {g})$$<br>$$\mu_i(n,S)&#x3D;max_{A \in \Pi_n(S)}  min_{A_j \in A}v_i(A_j) $$<br>$$\alpha-MMS :\forall i \in N , v_i(A_i)\geq \alpha \mu_i$$<br>$$ \alpha-PMMS :\forall i,j\in N,v_i(A_i)\geq \alpha \mu_i(2,A_i\cup A_j)$$<br>$$\alpha-GMMS:\forall N’ \subseteq N ,\forall i \in N’,v_i(A_i) \geq \alpha \mu_i(|N’|,\cup_{j\in N’}A_j)$$</p>
 <p>其中$EF$作为一种理想的，不存在嫉妒的分配方式，并不总是在任何情况都成立，这里也不会做过多的讨论；<br>不过$EF1$是可以被证明为总是存在的。<br>同时，通过对$\alpha-MMS,\alpha-PMMS,\alpha -GMMS$定义的观察，可以显然有$\alpha -GMMS $是$\alpha -MMS$和$\alpha -PMMS$的加强命题。<br>这些定义中$\alpha$作为衡量嫉妒的量化指标，下面会有很多篇幅着重计算$\alpha$的上界（</p>
 <h3 id="Part2-总览一下出现过的几个算法"><a href="#Part2-总览一下出现过的几个算法" class="headerlink" title="Part2 总览一下出现过的几个算法"></a>Part2 总览一下出现过的几个算法</h3><ul>
 <li><p>$Envy-cycle-elimination$<br>个人感觉算是一个比较重要的算法吧（原谅我因为不会写伪代码就放了张截图<br> <img src="/image.png" alt="alt text"></p>
 <p>这段代码的核心思想在于对于已经被分配的物品集合与代理间，维护一个$EF1$的关系。<br>考虑构造一种嫉妒图$G_P$用于表示代理间是否存在嫉妒关系。<br>根据$EF1$的定义，当$i$嫉妒$j$时，我们仅允许$i$存在对于$j$中一个物品的嫉妒，即移除$j$中一个物品可以使得$i$对$j$的嫉妒消失。</p>
+<ul>
+<li>添加物品：<br>因为我们只在存在入读为0的点的时候对嫉妒图$G_P$进行添加物品，而添加物品的代理为入读为0的点；在添加前，不存在指向该代理的嫉妒；在添加后，若存在指向该代理的嫉妒，那么可以通过移除添加的物品消除嫉妒，即满足$EF1$;</li>
+<li>循环消除:<br>循环消除仅在不存在入读为0的代理时进行（即图上一定有环）；<br>取出其中一个环，对于环上代理，存在嫉妒$j_1 \rightarrow j_2 \rightarrow … \rightarrow j_r \rightarrow j_1$，其中$j_i$为对应的分配；将该环上对应分配整体前移，即将$j_i$作为第$(i-1)$个代理的新的分配；可以知道这样操作一轮后，新的分配可以使得环上每一个代理都获得更加满意的分配。同时可以证明在该分配中，始终有$EF1$存在（听说在另一片论文有证明；</li>
+</ul>
 </li>
+<li><p>$Round-robin$<br><img src="/image-1.png" alt="alt text"><br>很显然的一个算法（<br>将代理按照一定的顺序进行分配，每次分配给当前代理在剩下物品中他最喜欢的物品。<br>可以按分配轮次进行划分，前面轮次代理得到的物品永远比后面轮次中其他代理得到的任何物品都更让他满意；可以知道，对于某个代理，相对于其他任何代理，他所有的物品的价值始终高于其他代理移除第一轮获得的物品的总价值；</p>
+</li>
+<li><p>$Draft-and-eliminate$<br>一个添加上预处理来进行分配的方式<br>先看预处理<br><img src="/image-3.png" alt="alt text"><br>预处理主要进行一个对代理们分配先后的排序；<br>这里假定了一个因子$\phi$用来衡量代理的嫉妒程度（极端嫉妒；<br>我们将代理分为两类，一类是存在极端嫉妒，另一类是不存在极端嫉妒。<br>极端代理是指“获得物品时，在前面被分配的物品的其他人中存在让他嫉妒超过系数$\phi$”的群体；<br>对于极端嫉妒的代理，我们在分配顺序上将他们提前，并且将他们的$h_i$赋值为$h_j$；剩余的不极端嫉妒的代理则按时间戳放入$L$;其中用$n’$表示极端嫉妒人数；<br>可以证明在该预处理下，第一轮$Round-robin$分配的结果为一组$A&#x3D;{ {h_1}, {h_2},…, {h_n}}$（对于不极端嫉妒的代理（后面$(n-n’)$个代理）很好证明；对于极端嫉妒代理，简单画一下也可以很快的出）</p>
+<p>用上预处理的顺序（<br><img src="/image-2.png" alt="alt text"><br>考虑一个很直观的想法，因为极端嫉妒获得了优先选择的机会，为了弥补不极端嫉妒代理，这里让不极端嫉妒代理第二次选择时优先选择（<br>然后进行$Envy-cycle-elimination$…</p>
+</li>
+<li><p>$Draft-Pack-and-Eliminate$<br>这就是一个针对于物品略大于代理的特例(主要是$m&#x3D;n+2$)<br>通过在的$n$次分配时引入虚拟商品$p,q$，其中$q$是每个代理在剩下分配中最不喜欢的物品，$p$是在剩下物品中每个代理除掉最不喜欢的物品的剩下所有物品集合成的一个大物品（一个装着剩下物品的大盒子）<br><img src="/image-4.png" alt="alt text"></p>
+</li>
+</ul>
+<h3 id="Part3-然后是几个系数"><a href="#Part3-然后是几个系数" class="headerlink" title="Part3 然后是几个系数"></a>Part3 然后是几个系数</h3><p>观察到$part1$给出几个定义中似乎含有对于分配嫉妒衡量的系数$\alpha$，后面就是对这个系数$\alpha$的讨论了。<br>主要运用各种不等式放缩与分类讨论，多看几遍就显而易见了（<br>其中主要围绕以下几个我认为的重点思路进行分类讨论or不等式放缩</p>
+<ul>
+<li>在$algorithm 4$中我们对于极端嫉妒与不极端嫉妒代理的划分；这里我们可以得到一组重要的不等式：<br>$$v_i(h_i)&gt; \phi v_i(g), \forall i \in L , g \in M \cup ^n_{k&#x3D;1}&#x3D;{h_k}$$<br>$$\phi v_i(h_i) \geq v_i(h_j), \forall i,j \in N\backslash L.$$<br>在后续反复套娃放缩使用；</li>
+<li>另一个重要分界就是考虑最后一个放入的物品是在$algorithm 3$中的第二次$Round-robin$与$Envy-cycle-elimination$</li>
+<li>和一个反复套娃的重要不等式$$\mu_i(n-1,M\backslash {g}) \geq \mu_i(n,M)$$<br>该妙妙不等式主要用于去除只有一个物品的代理来简化模型（有时也会与时俱进消除恰好有两个物品的代理）；</li>
+<li>还有就是$EF1$等几个的定义</li>
+<li>同时需要注意$algorithm 3$中分配物品存在的天然大小关系</li>
+</ul>
+<p>其中有部分对$\phi$进行调整然后重新计算系数，这里直接观察证明过程中有涉及到$\phi$具体数值的部分并对其进行修正（或考虑放缩是否适用，介于调整后的系数与$\phi$接近，在这篇文章内都是适用的）<br>比较<del>奇妙的</del>复杂的可能是$\frac{2}{\phi+2}-GMMS$ 分配的证明。<br>总之就是放缩+分类，多看几遍就懂了；<br><del>大量的不等式秉承了一看都会一做都蒙的优良传统，凑就完了</del></p>
+<h3 id="Part4-第五部分的几个系数"><a href="#Part4-第五部分的几个系数" class="headerlink" title="Part4 第五部分的几个系数"></a>Part4 第五部分的几个系数</h3><p>因为第五部分是一种特例的优化，所以单独写一下。<br>第五部分虽然是考虑$m\leq n+2$，但是当$m&lt;&#x3D;n$时，上述几个定义的证明都是一目了然的东西。<br>因为系数不是很大，$m&#x3D;n+1$时很容易证明；$m+n+2$时因为情况不多，挨个儿枚举一下也挺好证明。<br>总之就是分类+放缩a了（</p>
+<h3 id="Part5-下面我来简单喵两句"><a href="#Part5-下面我来简单喵两句" class="headerlink" title="Part5 下面我来简单喵两句"></a>Part5 下面我来简单喵两句</h3><p><a href="absent.png">柴郡猫猫头</a></p>
+<ul>
+<li>对于$algorithm 3$的预处理，其实是一个很粗糙的启发式（听说是叫这个名字吧）处理：用一个系数衡量嫉妒，然后将会对先前分配产生嫉妒的代理提前来消除在第一轮中就嫉妒的情况，然后让未被提前的代理在第二轮获得选择机会来进行弥补第一轮失去的优先选择权。这里可以考虑用更复杂的方式来对嫉妒进行衡量，比如考虑代理对于多个物品的嫉妒的情况（考虑到两种比较典型的情况：一种是每个代理对于物品的估值都差不多；另一种是部分代理对部分物品的估值存在即大的反差，比如有的代理认为一文不值的东西有的代理又觉得非常值钱云云）</li>
+<li>对于$m&#x3D;n+2$也来简单喵两句；是否存在一些特殊情况可以将$m&#x3D;n+2$推进至$m&#x3D;n+2+\Delta$</li>
+<li>提升系数$\alpha$？感觉需要从其他方式优化$algorithm 3$或者对$algorithm 3$抽象成特殊化情形进行分类讨论（感觉现有$algorithm 3$的系数已经很难进行大的优化了）</li>
+</ul>
+<h3 id="Part6-其他"><a href="#Part6-其他" class="headerlink" title="Part6 其他"></a>Part6 其他</h3><ul>
+<li>比较好奇的是为什么一开始会用黄金比例的系数，（是因为$1+\phi^{-1}&#x3D;\phi$么）不过后面好像也没有出现过多和系数本身数值相关的放缩或转换</li>
+<li>现有系数是先猜后证的吧</li>
+<li>红轴终究触发力还是大了点，想念青轴的的第11天，舍友在喵</li>
 </ul>
 
     </div>
