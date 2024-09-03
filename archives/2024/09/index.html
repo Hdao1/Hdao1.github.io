@@ -39,6 +39,8 @@
 
 
 
+<script src="/js/lib/search.js"></script>
+
 
 
 <link rel="stylesheet" href="/css/main.css" />
@@ -79,6 +81,11 @@
         <a href="/categories">
             <i class="fa-solid fa-bookmark fa-fw"></i>
             <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/essay">
+            <i class="fa-solid fa-essay fa-fw"></i>
+            <span>&ensp;Essay</span>
         </a>
         
         <a href="/tags">
@@ -131,6 +138,15 @@
                     </div>
                 </a>
                 
+                <a href="/essay">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-essay fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Essay</div>
+                    </div>
+                </a>
+                
                 <a href="/tags">
                     <div class="item">
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
@@ -152,6 +168,8 @@
             
 <div id="archives">
     
+    <input id="search-bar" class="input" placeholder="搜索" v-model="rawSearch" />
+    
     <div id="timeline-wrap" ref="timeline">
         
         <div class="timeline" data-title="喵喵观光团">
@@ -172,7 +190,7 @@
             <div class="timeline-tail"></div>
             <div class="timeline-content">
                 <div class="item-time">2024/9/2</div>
-                <a href="/2024/09/02/efproblem/">
+                <a href="/2024/09/02/efxproblem/">
                     <h3>efproblem</h3>
                 </a>
                 <div class="info">
@@ -186,7 +204,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/life/" style="color: #03a9f4">life</a>
+                            <a href="/tags/life/" style="color: #ffa2c4">life</a>
                         </span>
                         
                     </span>

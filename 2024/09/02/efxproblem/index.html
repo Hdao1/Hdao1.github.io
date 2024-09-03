@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Archives | 喵喵观光团</title>
+    <title>efproblem | 喵喵观光团</title>
     <meta name="author" content="Hdao" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -39,7 +39,9 @@
 
 
 
-<script src="/js/lib/search.js"></script>
+
+
+
 
 
 
@@ -165,55 +167,63 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>efproblem</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2024/9/2
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
             
-<div id="archives">
-    
-    <input id="search-bar" class="input" placeholder="搜索" v-model="rawSearch" />
-    
-    <div id="timeline-wrap" ref="timeline">
-        
-        <div class="timeline" data-title="喵喵观光团">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/4/1</div>
-                <a href="/2024/04/01/meow/">
-                    <h3>喵喵观光团</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                </div>
-            </div>
-        </div>
-        
-        <div class="timeline" data-title="efproblem">
-            <div class="timeline-tail"></div>
-            <div class="timeline-content">
-                <div class="item-time">2024/9/2</div>
-                <a href="/2024/09/02/efxproblem/">
-                    <h3>efproblem</h3>
-                </a>
-                <div class="info">
-                    
-                    
-                    <span class="tags">
-                        <span class="icon">
-                            <i class="fa-solid fa-tags fa-fw"></i>
-                        </span>
-                        
-                        
-                        <span class="tag">
-                            
-                            <a href="/tags/life/" style="color: #00bcd4">life</a>
-                        </span>
-                        
-                    </span>
-                    
-                </div>
-            </div>
-        </div>
+            
+            <span class="tag">
+                
+                <a href="/tags/life/" style="color: #ffa2c4">life</a>
+            </span>
+            
+        </span>
         
     </div>
+    
+    <div class="content" v-pre>
+        <p>上一周因为一直在看某不可分割物品公平分配相关paper，这几天关于此正在写slide，顺手记录一下一点喵言喵语<del>并不是因为已经不想再写slide了</del></p>
+<span id="more"></span>
+
+<h3 id="part1-先给出以下几个概念"><a href="#part1-先给出以下几个概念" class="headerlink" title="part1 先给出以下几个概念"></a>part1 先给出以下几个概念</h3><p>首先假定分配物品的总数M ，和参与分配的代理N，给定一个分配$A&#x3D;{A_1,…,A_n}$，其中$A_i$是第$i$个代理所得分配的捆绑物，下面几个概念均在此环境下进行定义。</p>
+<ul>
+<li>$EF(envy-free)$:<br>$\forall i,j \in N,v_i(A_i) \geq v_i(A_j)$</li>
+<li>$\alpha-EF1$<br>  $\forall i,j,\in N,A_j \not &#x3D;{0} , \exists g \in A_j,v_i(A_i)\geq \alpha v_i(A_j\backslash {g})$</li>
+<li>$\alpha-EFX$<br>$\forall i,j,\in N,A_j \not &#x3D;{0} , \forall g \in A_j,v_i(A_i)\geq \alpha v_i(A_j\backslash {g})$</li>
+<li>$\mu_i(n,S)&#x3D;max_{A \in \Pi_n(S)}  min_{A_j \in A}v_i(A_j)$</li>
+<li>$\alpha-MMS$<br>$\forall i \in N , v_i(A_i)\geq \alpha \mu_i$</li>
+<li>$\alpha-PMMS$<br>  $\forall i,j\in N,v_i(A_i)\geq \alpha \mu_i(2,A_i\cup A_j)$</li>
+<li>$\alpha-GMMS$<br>  $\forall N’ \subseteq N ,\forall i \in N’,v_i(A_i) \geq \alpha \mu_i(|N’|,\cup_{j\in N’}A_j)$</li>
+</ul>
+<p>其中$EF$作为一种理想的，不存在嫉妒的分配方式，并不总是在任何情况都成立，这里也不会做过多的讨论；<br>不过$EF1$是可以被证明为总是存在的。<br>同时，通过对$\alpha-MMS,\alpha-PMMS,\alpha -GMMS$定义的观察，可以显然有$\alpha -GMMS $是$\alpha -MMS$和$\alpha -PMMS$的加强命题。<br>这些定义中$\alpha$作为衡量嫉妒的量化指标，下面会有很多篇幅着重计算$\alpha$的上界（</p>
+<h3 id="Part2-总览一下出现过的几个算法"><a href="#Part2-总览一下出现过的几个算法" class="headerlink" title="Part2 总览一下出现过的几个算法"></a>Part2 总览一下出现过的几个算法</h3><ul>
+<li><p>$Envy-cycle-elimination$<br>个人感觉算是一个比较重要的算法吧（原谅我因为不会写伪代码就放了张截图<br> <img src="/image.png" alt="alt text"></p>
+<p>这段代码的核心思想在于对于已经被分配的物品集合与代理间，维护一个$EF1$的关系。<br>考虑构造一种嫉妒图$G_P$用于表示代理间是否存在嫉妒关系。<br>根据$EF1$的定义，当$i$嫉妒$j$时，我们仅允许$i$存在对于$j$中一个物品的嫉妒，即移除$j$中一个物品可以使得$i$对$j$的嫉妒消失。</p>
+</li>
+</ul>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
 </div>
 
             <footer id="footer">
@@ -244,6 +254,12 @@
         
     </div>
     <script src="/js/main.js"></script>
+    
+    
+
+
+
+
     
 </body>
 </html>
